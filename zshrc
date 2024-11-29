@@ -45,10 +45,10 @@ zinit cdreplay -q
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Keybindings
-bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
+
+# bindkey '^p' history-search-backward
+# bindkey '^n' history-search-forward
+# bindkey '^[w' kill-region
 
 # History
 HISTSIZE=5000
@@ -74,11 +74,14 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias t='tmux'
 alias gs='git status'
 alias ga='git add .'
-alias gc='git commit -m'
+alias gc='git commit'
 alias c='clear'
 alias q='exit'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias install-config='~/.dotfiles/install'
+alias prisma='npx prisma'
+alias cd..='cd ..'
 
 # Shell integrations
 eval "$(fzf --zsh)"

@@ -3,3 +3,7 @@
 [user]
 	name = foxane
 	email = 65512187+foxane@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
