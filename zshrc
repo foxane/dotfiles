@@ -1,3 +1,6 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/foxane/.zsh/completions:"* ]]; then export FPATH="/home/foxane/.zsh/completions:$FPATH"; fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -72,6 +75,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias t='tmux'
+alias l='lazygit'
 alias gs='git status'
 alias ga='git add .'
 alias gc='git commit'
@@ -82,6 +86,8 @@ alias grep='grep --color=auto'
 alias install-config='~/.dotfiles/install'
 alias prisma='npx prisma'
 alias cd..='cd ..'
+alias grub-update='sudo grub-mkconfig -o /boot/grub/grub.cfg'
+alias shadd='bunx --bun shadcn@latest add'
 
 # Shell integrations
 eval "$(fzf --zsh)"
@@ -97,13 +103,49 @@ ZSH_HIGHLIGHT_STYLES[glob]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=magenta'
 ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=red'
 
+bindkey "^[[H" beginning-of-line  # Alternative Home key
+bindkey "^[[F" end-of-line        # Alternative End key
+
 # Check if NVM is installed, if not, install it
 if [ ! -d "$HOME/.nvm" ]; then
   echo "NVM not found, installing..."
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 fi
 
+
 # NVM
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Deno
+. "/home/foxane/.deno/env"
+
+# bun completions
+[ -s "/home/foxane/.bun/_bun" ] && source "/home/foxane/.bun/_bun"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+eval $(thefuck --alias)
+
+function floor() {
+    float_in=$1
+    floor_val=${float_in/.*}
+}
+
+mon(){
+  if [ "$1" -lt 1 ] || [ "$1" -gt 100 ]; then 
+    echo "Only between 1 and 100, sir. Let's pretend we have standards."
+  else
+    contrast=$(( $1 * 1 ))
+    if [ "$contrast" -gt 100 ]; then
+      contrast=100
+    fi
+    echo "Setting brightness to $1 and contrast to $contrast"
+    ddcutil setvcp 10 "$1" && ddcutil setvcp 12 $contrast
+  fi
+}
+
+export PATH="/home/foxane/programs/idea-IC-251.26927.53/bin":$PATH
+export PATH="/opt/android-studio/bin:$PATH"
